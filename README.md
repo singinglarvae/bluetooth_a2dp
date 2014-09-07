@@ -22,6 +22,7 @@ The following should provide a direct audio connection over bluetooth (a2dp) for
 9. Allow execution for all files: sudo chmod +x
 10. Reload the udev rules: sudo udevadm control --reload-rules
 11. Start the bluetooth_a2dp service: sudo service bluetooth_a2dp start
+
 All done!
 
 #Inspired by:
