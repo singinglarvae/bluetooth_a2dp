@@ -1,0 +1,37 @@
+#!/bin/bash
+# Create the BT sink and reload the BT connection
+# Location: /usr/lib/udev/bluetooth_a2dp
+
+# BOF edit
+PA_SINK="alsa_output.platform-bcm2835_AUD0.0.analog-stereo"
+LOG_FILE="/var/log/bluetooth_a2dp"
+BT_USER="pi"
+# EOF edit
+
+if [ "$ACTION" = "add" ]
+        then
+        # DEBUG
+        #echo "Add device" >> $LOG_FILE
+        # A pause is needed in order for the BT source to show up
+        sleep 1
+        # Get source list and extract only the bluez_source.MAC
+        SOURCE=$(sudo -u "$BT_USER" pactl list sources | grep bluez_source | awk '{print substr($0,8,length)}')
+        # DEBUG
+        #echo $SOURCE >> $LOG_FILE 
+        # Setup the sink
+        $(sudo -u "$BT_USER" pactl load-module module-loopback source="$SOURCE" sink="$PA_SINK" rate=44100 adjust_time=0)
+fi
+
+if [ "$ACTION" = "remove" ]
+        then
+        # BOF ?? 
+        # Is this needed ? Not sure...
+        # Remove the previous created sink (but we need to get its $ID...)
+        #$(sudo -u "$BT_USER" pactl unload-module "$ID")
+        # EOF ??
+        # DEBUG
+        #echo "remove device" >> $LOG_FILE
+        # The BT sink was removed, the bluetooth_a2dp service is stopped/started to accept new connection
+        $(sudo -u "$BT_USER" service bluetooth_a2dp stop)
+        $(sudo -u "$BT_USER" service bluetooth_a2dp start)
+fi
