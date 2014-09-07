@@ -11,7 +11,7 @@ The following should provide a direct audio connection over bluetooth (a2dp) for
 
 #Instruction:
 1. Install the required packages: sudo apt-get install bluez pulseaudio-module-bluetooth python-gobject python-gobject-2
-2. Edit the audio.conf file: sudo nano /etc/bluetooth/audio.conf)
+2. Edit the audio.conf file: sudo nano /etc/bluetooth/audio.conf
 3. Add the following line after [General]: (Enable=Source,Sink,Media,Socket)
 4. (nb: you may edit other option within this directory such as bluetooth name and so on)
 5. Make sure to enable bluetooth at startup: sudo systemctl enable bluetooth.service
