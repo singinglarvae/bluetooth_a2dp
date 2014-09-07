@@ -1,0 +1,6 @@
+# Trigger for bluetooth_a2dp 
+# Launch bluetooth_a2dp when a bluettoh device gets connected
+# Please run "sudo udevadm control --reload-rules" in order to reload udev rules
+# Please run "sudo udevadm trigger --verbose" in order to debug
+ACTION=="add", SUBSYSTEM=="bluetooth", ENV{HOLUX_M1000}="present", RUN+="/usr/lib/udev/bluetooth_a2dp"
+ACTION=="remove", SUBSYSTEM=="bluetooth", ENV{HOLUX_M1000}=="present", RUN+="/usr/lib/udev/bluetooth_a2dp"
