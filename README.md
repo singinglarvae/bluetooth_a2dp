@@ -10,11 +10,17 @@ Required:
 - Packages: bluez pulseaudio-module-bluetooth python-gobject python-gobject-2
 
 Instruction:
+- Install the required packages: sudo apt-get install bluez pulseaudio-module-bluetooth python-gobject python-gobject-2
+- Edit the audio.conf file: sudo nano /etc/bluetooth/audio.conf)
+- Add the following line after [General]: (Enable=Source,Sink,Media,Socket)
+- Make sure to enable bluetooth at startup: sudo systemctl enable bluetooth.service
+- Make sure to enable the sound driver at startup: sudo echo "snd-bcm2835" >> /etc/modules-load.d/snd-bcm2835.conf 
+- Reboot: sudo reboot
 - As root, move the files to the required location
-- If required, change the configuration within the files (default user is pi and bluetooth PIN is 0000)
-- Allow execution (chmod +x)
-- Reload the udev rules (sudo udevadm control --reload-rules)
-- Start the bluetooth_a2dp service (sudo service bluetooth_a2dp start)
+- If required, change the configuration within the files
+- Allow execution: sudo chmod +x
+- Reload the udev rules: sudo udevadm control --reload-rules
+- Start the bluetooth_a2dp service: sudo service bluetooth_a2dp start
 All done!
 
 Inspired by:
