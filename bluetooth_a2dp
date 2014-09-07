@@ -1,0 +1,39 @@
+### BEGIN INIT INFO
+# Provides: bluetooth_a2dp
+# Required-Start: $remote_fs $syslog bluetooth
+# Required-Stop: $remote_fs $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Makes Bluetooth discoverable and connectable to a specified PIN
+# Description: Start Bluetooth-Agent at boot time.
+### END INIT INFO
+
+# Location: /etc/init.d/bluetooth_a2dp
+# BOF edit
+PIN=0000
+BT_USER=pi
+DAEMON=/usr/bin/bluetooth-agent
+PIDFILE=/var/run/bluetooth_a2dp
+LOGFILE=/var/log/bluetooth_a2dp
+# EOF edit
+
+case "$1" in
+start)
+echo "Starting bluetooth_a2dp"
+# Make bluetooth visible to other devices
+hciconfig hci0 piscan
+# Start bluetooth-agent as a daemon in the background with $PIN as password
+start-stop-daemon --start --background --pidfile $PIDFILE --make-pidfile --user $BT_USER --startas $DAEMON -- $PIN
+# DEBUG
+#echo "bluetooth-agent started as a daemon with PIN $PIN" > /var/log/bluetooth_a2dp
+;;
+stop)
+echo "Stopping bluetooth_a2dp"
+start-stop-daemon --stop --pidfile $PIDFILE --retry 10
+;;
+*)
+echo "Usage: /etc/init.d/bluetooth_a2dp {start|stop}"
+exit 1
+;;
+esac
+exit 0
