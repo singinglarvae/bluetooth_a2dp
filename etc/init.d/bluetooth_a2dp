@@ -13,8 +13,8 @@
 PIN=0000
 BT_USER=pi
 DAEMON=/usr/bin/bluetooth-agent
-PIDFILE=/var/run/bluetooth_a2dp
-LOGFILE=/var/log/bluetooth_a2dp
+PIDFILE=/var/run/bluetooth_a2dp.pid
+LOGFILE=/var/log/bluetooth_a2dp.log
 # EOF edit
 
 case "$1" in
